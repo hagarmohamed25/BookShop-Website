@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Register</title>
+</head>
+<body>
+
+    <form>
+        <div class="info-group">
+
+            <label for="username">Name</label>
+            <br>
+            <input type="text" id="username" placeholder="Enter your Name" required>
+            <br><br>
+
+            <label for="email">Email</label>
+            <br>
+            <input type="email" id="email" placeholder="Enter your Email" required>
+            <br><br>
+
+            <label for="pass">Password</label>
+            <br>
+            <input type="password" id="pass" placeholder="Enter your Password" required>
+            <br><br>
+
+            <label for="conf_pass">Confirm Password</label>
+            <br>
+            <input type="password" id="conf_pass" placeholder="Confirm Password" required autocomplete="new-password">
+            <span id="error_msg"></span>
+
+            <br><br>
+            <button type="submit" name="Login" id="loginbtn">Register</button>
+
+        </div>
+    </form>
+    <script src="../static/js/script.js"></script>
+</body>
+</html>
