@@ -5,7 +5,6 @@ const errorMessage = document.getElementById("error_msg");
 
 form.addEventListener("submit", function (event) {
     if (password.value !== confirmPassword.value) {
-        //event.preventDefault(); // Stop the form submission
         errorMessage.textContent = "Passwords do not match";
     }
 });
@@ -13,7 +12,7 @@ form.addEventListener("submit", function (event) {
 form.addEventListener("submit", function (event) {
 
     if (password.value !== confirmPassword.value) {
-        event.preventDefault(); // Stop the form
+        event.preventDefault(); 
         errorMessage.textContent = "Passwords do not match";
     } else {
         errorMessage.textContent = "";
