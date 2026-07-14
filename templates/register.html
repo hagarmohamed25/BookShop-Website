@@ -8,25 +8,25 @@
 </head>
 <body>
 
-    <form>
+    <form action="/register" method="POST">
         <div class="info-group">
 
             <label for="username">Name</label>
-            <input type="text" id="username" placeholder="Enter your Name" required>
+            <input type="text" id="username" name="username" placeholder="Enter your Name" required>
 
             <label for="email">Email</label>
-            <input type="email" id="email" placeholder="Enter your Email" required>
+            <input type="email" id="email" name="email" placeholder="Enter your Email" required>
 
             <label for="pass">Password</label>
-            <input type="password" id="pass" placeholder="Enter your Password" required>
+            <input type="password" id="pass" name="password" placeholder="Enter your Password" required>
 
             <label for="conf_pass">Confirm Password</label>
-            <input type="password" id="conf_pass" placeholder="Confirm Password" required autocomplete="new-password">
+            <input type="password" id="conf_pass" name="confirm_password" placeholder="Confirm Password" required autocomplete="new-password">
             <span id="error_msg"></span>
 
             <button type="submit" name="Login" id="loginbtn">Register</button>
 
-            <p>Already have an account? <a href="login.html">Login</a></p>
+            <p>Already have an account? <a href="/login">Login</a></p>
 
         </div>
     </form>
