@@ -1,0 +1,32 @@
+{
+    "categories": [
+        {
+            "id": 1,
+            "name": "Fiction",
+            "books": [
+                {
+                    "id": 1,
+                    "title": "Harry Potter",
+                    "description": "Harry Potter is a young wizard who discovers his magical heritage and attends Hogwarts School of Witchcraft and Wizardry where he faces many adventures.",
+                    "price": 19.99,
+                    "stock": 12,
+                    "image": "harry potter and the philosopher's stone.jpg"
+                },
+                {
+                    "id": 2,
+                    "title": "A Quest of Heroes",
+                    "description": "A Quest of Heroes is an epic coming-of-age fantasy following 14-year-old Thorgrin. Outcast by his family, he defies his father to join the King’s Legion, discovers mysterious magical powers, and gets entangled in forbidden romance and political intrigue.",
+                    "price": 17.50,
+                    "stock": 10,
+                    "image": "A Quest of Heroes.jpg"
+                }
+            ]
+        },
+
+        {
+            "id": 2,
+            "name": "Science",
+            "books": []
+        }
+    ]
+}

@@ -11,92 +11,79 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!--Home CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+
+    <!-- CSS for social media icons -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
-<body>
+
+
+<body id="home">
 
 <nav class="navbar navbar-expand-lg bg-light border-bottom px-3">
 
     <!-- Logo -->
-    <a class="navbar-brand fw-bold me-4" href="{{ url_for('home') }}">
+    <a class="navbar-brand fw-bold me-4" href="#home">
         BookShop
     </a>
 
     <!-- Categories dropdown list -->
-    <div class="dropdown me-3">
-        <button class="btn btn-light border dropdown-toggle"
-                data-bs-toggle="dropdown">
-            Categories
-        </button>
+    <!-- Categories dropdown -->
+<div class="dropdown me-3">
 
-        <ul class="dropdown-menu">
+    <button class="btn btn-light border dropdown-toggle"
+            data-bs-toggle="dropdown">
+        Categories
+    </button>
 
-            <li>
-                <a class="dropdown-item"
-                   href="{{ url_for('category', name='Fiction') }}">
-                    Fiction
-                </a>
-            </li>
+    <ul class="dropdown-menu">
 
-            <li>
-                <a class="dropdown-item"
-                   href="{{ url_for('category', name='Fantasy') }}">
-                    Fantasy
-                </a>
-            </li>
+        {% for category in categories %}
 
-            <li>
-                <a class="dropdown-item"
-                   href="{{ url_for('category', name='Mystery') }}">
-                    Mystery
-                </a>
-            </li>
-
-            <li>
-                <a class="dropdown-item"
-                   href="{{ url_for('category', name='Science') }}">
-                    Science
-                </a>
-            </li>
-
-            <li>
-                <a class="dropdown-item"
-                   href="{{ url_for('category', name='Romance') }}">
-                    Romance
-                </a>
-            </li>
-
-            <li>
-                <a class="dropdown-item"
-                   href="{{ url_for('category', name='Children') }}">
-                    Children
-                </a>
-            </li>
-
-        </ul>
-    </div>
-
-    <!-- Section of each page links -->
-    <ul class="navbar-nav">
-
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('home') }}">
-                Home
+        <li>
+            <a class="dropdown-item"
+               href="#category-{{ category.id }}">
+                {{ category.name }}
             </a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('policies') }}">
-                Policies
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="#about">
-                About Us
-            </a>
-        </li>
+        {% endfor %}
 
     </ul>
+
+</div>
+
+    <!-- Section of each page links -->
+<ul class="navbar-nav">
+
+    <li class="nav-item">
+        <a class="nav-link" href="#home">
+            Home
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="#policies">
+            Policies
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="#about">
+            About Us
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="#contact">
+            Contact Us
+        </a>
+    </li>
+
+</ul>
 
     <!-- Right side of the navbar -->
     <div class="ms-auto d-flex align-items-center">
@@ -178,97 +165,96 @@
     <p>Ready to Choose Your Next Book Friend!</p>
     </div>
 
-    <section class="sections"></section>
- 
-     <section id="categories">
-        <h2>Categories Section</h2>
+{% for category in categories %}
 
-<section class="category">
-    <h2>Fiction</h2>
+<section id="category-{{ category.id }}" class="category">
+
+
+    <h2>{{ category.name }}</h2>
 
     <div class="books-grid">
 
-        {% for book in books %}
-        <div class="book-card">
-
-
-            <div class="book-image">
-                <img src="{{ book.image }}" alt="{{ book.title }}">
-            </div>
-
-            <div class="book-info">
-
-                <h3>{{ book.title }}</h3>
-
-                <p class="description">
-                    <span class="short-text">
-                        {{ book.description[:120] }}...
-                    </span>
-
-                    <span class="full-text hidden">
-                        {{ book.description }}
-                    </span>
-
-                    <button class="see-more-btn">
-                        See More
-                    </button>
-                </p>
-
-                <!-- Bottom Section -->
-                <div class="book-footer">
-
-                    <div class="price">
-                        ${{ book.price }}
-                    </div>
-
-                    <div class="cart-controls">
-
-                        <button class="qty-btn minus">−</button>
-
-                        <span class="quantity">0</span>
-
-                        <button class="qty-btn plus">+</button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
+        {% for book in category.books %}
+            <!-- Book Card -->
         {% endfor %}
 
     </div>
+
 </section>
-           
 
+{% endfor %}
+        
+
+<!--Footer section-->
+<!--Policies section-->
+
+            <section id="policies" class="info-section">
+
+    <h2>Policies</h2>
+
+    <div class="policy-box">
+
+        <h4>Shipping</h4>
+        <p>
+            Orders are processed within 3–5 business days.
+        </p>
+    </div>
+
+    <div class="policy-box">
+        <h4>Returns</h4>
+        <p>
+            Books can be returned within 14 days if they are in their original condition.
+        </p>
+    </div>
+
+    <div class="policy-box">
+        <h4>Payment</h4>
+        <p>
+            We accept cash on delivery only.
+        </p>
+    </div>
 
         </section>
 
-        <section class="fantasy">
-            <h2>Fantasy</h2>
-        </section>
 
-        <section class="mystery">
-            <h2>Mystery</h2>
-        </section>
-    </section>
+<!--About section-->
 
-        <section class="Policies">
-            <h2>Policies</h2>
-        </section>
+<section id="about" class="info-section">
 
-        <section class="Contact">
-            <h2>Contact Us</h2>
-        </section>
+    <h2>About Us</h2>
+    <p>
 
-        <section class="about" id="about">
-            <h2>About Us</h2>
-        </section>
-    </section>
+        Welcome to our online bookstore.
+
+        Our goal is to make reading accessible by offering books from many categories at affordable prices.
+
+       Find the latest bestsellers, classics, and unique titles from the whole world, and we hope you'll find something you enjoy.
+
+    </p>
+
+</section>
 
 
+<!--Contact section-->
 
+<section id="contact" class="info-section">
+
+    <h2>Contact Us</h2>
+
+    <p>Email: bookshop@gmail.com</p>
+
+    <p>Phone: +20 7XXXXXXXX</p>
+
+    <p>Address: Cairo, Egypt</p>
+
+    <p>Follow us on social media:</p>
+
+    <p>
+        <a href="https://facebook.com/bookshop" class="fa fa-facebook"></a>
+        | <a href="https://instagram.com/bookshop" class="fa fa-instagram"></a>
+    </p>
+
+</section>
 
 
 </div>

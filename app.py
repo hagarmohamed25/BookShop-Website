@@ -7,6 +7,10 @@ app.secret_key = "mysecretkeyishidden"
 
 DATABASE = "Database/users.json"
 
+with open("Database/books.json", "r") as f:
+    data = json.load(f)
+
+categories = data["categories"]
 
 def load_users():
     if not os.path.exists(DATABASE):
