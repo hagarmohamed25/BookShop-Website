@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-light border-bottom px-3">
+    <a class="navbar-brand fw-bold" href="{{ url_for('home') }}">BookShop</a>
+    <div class="ms-auto">
+        <a href="{{ url_for('home') }}" class="btn btn-outline-dark"><i class="bi bi-house"></i> Home</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="welc-msg">
+        <h2><i class="bi bi-search"></i> Search</h2>
+    </div>
+
+    <form action="{{ url_for('search') }}" method="GET" class="search-form">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control form-control-lg" 
+                   placeholder="Search for books..." value="{{ keyword }}">
+            <button type="submit" class="btn btn-primary btn-lg"><i class="bi bi-search"></i> Search</button>
+        </div>
+    </form>
+
+    {% if keyword %}
+        <h4 class="mt-4">Results for "{{ keyword }}"</h4>
+    {% endif %}
+
+    {% if books %}
+        <p class="text-muted">Found {{ books|length }} book(s)</p>
+        <div class="books-grid mt-3">
+            {% for result in books %}
+            <div class="book-card">
+                <img src="{{ url_for('static', filename='uploads/' + result.book.image) }}" 
+                     alt="{{ result.book.title }}"
+                     onerror="this.src='{{ url_for('static', filename='uploads/default_book.png') }}'">
+                <h3>{{ result.book.title }}</h3>
+                <p>{{ result.book.description[:100] }}...</p>
+                <div class="book-price">${{ "%.2f"|format(result.book.price) }}</div>
+                <small class="text-muted">{{ result.category }}</small>
+                <a href="{{ url_for('home') }}#category-{{ loop.index }}" class="btn btn-outline-primary btn-sm mt-2">View</a>
+            </div>
+            {% endfor %}
+        </div>
+    {% elif keyword %}
+        <div class="empty-cart">
+            <i class="bi bi-search"></i>
+            <h3>No books found</h3>
+            <p>Try searching with different keywords</p>
+            <a href="{{ url_for('home') }}" class="btn btn-primary">Browse Books</a>
+        </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>

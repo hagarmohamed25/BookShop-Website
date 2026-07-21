@@ -10,23 +10,55 @@
                     "description": "Harry Potter is a young wizard who discovers his magical heritage and attends Hogwarts School of Witchcraft and Wizardry where he faces many adventures.",
                     "price": 19.99,
                     "stock": 12,
-                    "image": "harry potter and the philosopher's stone.jpg"
+                    "image": "f268b833-8cde-4a6e-b0df-502d2da276fb.png"
                 },
                 {
                     "id": 2,
-                    "title": "A Quest of Heroes",
-                    "description": "A Quest of Heroes is an epic coming-of-age fantasy following 14-year-old Thorgrin. Outcast by his family, he defies his father to join the King’s Legion, discovers mysterious magical powers, and gets entangled in forbidden romance and political intrigue.",
-                    "price": 17.50,
-                    "stock": 10,
-                    "image": "A Quest of Heroes.jpg"
+                    "title": "A Quest of Heroe",
+                    "description": "A Quest of Heroes is an epic coming-of-age fantasy following 14-year-old Thorgrin. Outcast by his family, he defies his father to join the King\u00e2\u20ac\u2122s Legion, discovers mysterious magical powers, and gets entangled in forbidden romance and political intrigue.",
+                    "price": 17.5,
+                    "stock": 1,
+                    "image": "a_quest_of_heroes.jpg"
+                },
+                {
+                    "id": 3,
+                    "title": "The Goldfinch",
+                    "description": "A boy in New York is taken in by a wealthy family after his mother is killed in a bombing at the Metropolitan Museum of Art. In a rush of panic, he steals 'The Goldfinch', a painting that eventually draws him into a world of crime.",
+                    "price": 10.95,
+                    "stock": 4,
+                    "image": "533bb20a-101a-44f5-8174-c5f2c2c52e29.jpg"
                 }
             ]
         },
-
         {
             "id": 2,
-            "name": "Science",
-            "books": []
+            "name": "Comedy",
+            "books": [
+                {
+                    "id": 1,
+                    "title": "The Hitchhiker's Guide to the Galaxy",
+                    "description": "A hilarious, absurdist sci-fi classic that follows an ordinary human as he travels across the universe after Earth is destroyed to make way for a hyperspace bypass.",
+                    "price": 20.0,
+                    "stock": 8,
+                    "image": "d0e4363a-357e-4668-a570-ea166aded8ef.webp"
+                },
+                {
+                    "id": 2,
+                    "title": "Me Talk Pretty One Day",
+                    "description": "A brilliant collection of autobiographical essays where the author recounts his awkward youth and the hilarious struggles of moving to France as an adult and attempting to learn French.",
+                    "price": 30.0,
+                    "stock": 5,
+                    "image": "94586f12-4448-4a27-ad4c-2ca943116af6.webp"
+                },
+                {
+                    "id": 3,
+                    "title": "A Confederacy of Dunces by John Kennedy Toole",
+                    "description": "A posthumous Pulitzer Prize-winning masterpiece that follows Ignatius J. Reilly, a hilarious and eccentric eccentric through New Orleans.",
+                    "price": 25.5,
+                    "stock": 11,
+                    "image": "cc638a39-0d55-473e-b9af-e174b3fdb25c.jpg"
+                }
+            ]
         }
     ]
 }

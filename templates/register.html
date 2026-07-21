@@ -3,33 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/style.css">
     <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
-
-    <form action="/register" method="POST">
+<body class="auth-page">
+    <form action="{{ url_for('register') }}" method="POST" class="auth-form">
         <div class="info-group">
-
+            <h2 class="text-center mb-3">📚 Register</h2>
+            
             <label for="username">Name</label>
-            <input type="text" id="username" name="username" placeholder="Enter your Name" required>
-
+            <input type="text" id="username" name="username" placeholder="Enter your name" required>
+            
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Enter your Email" required>
-
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            
             <label for="pass">Password</label>
-            <input type="password" id="pass" name="password" placeholder="Enter your Password" required>
-
+            <input type="password" id="pass" name="password" placeholder="Enter your password" required>
+            <div id="pass_error" style="display:none; color:#dc3545; font-size:13px; margin-top:3px;">Your password should be more than 6 digits!</div>
+            
             <label for="conf_pass">Confirm Password</label>
-            <input type="password" id="conf_pass" name="confirm_password" placeholder="Confirm Password" required autocomplete="new-password">
-            <span id="error_msg"></span>
-
-            <button type="submit" name="Login" id="loginbtn">Register</button>
-
-            <p>Already have an account? <a href="/login">Login</a></p>
-
+            <input type="password" id="conf_pass" name="confirm_password" placeholder="Confirm your password" required>
+            <div id="conf_error" style="display:none; color:#dc3545; font-size:13px; margin-top:3px;">Passwords do not match!</div>
+            
+            {% if error %}
+                <p class="error-msg">{{ error }}</p>
+            {% endif %}
+            
+            <button type="submit">Register</button>
+            <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
         </div>
     </form>
-    <script src="../static/js/script.js"></script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

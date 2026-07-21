@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .add-book-form {
+            display: none !important;
+        }
+        .add-book-form.show {
+            display: block !important;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg bg-light border-bottom px-3">
+    <a class="navbar-brand fw-bold" href="{{ url_for('home') }}">BookShop</a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="dropdown ms-3">
+            <button class="btn btn-light border dropdown-toggle" data-bs-toggle="dropdown">Categories</button>
+            <ul class="dropdown-menu">
+                {% for cat in categories %}
+                    <li><a class="dropdown-item" href="#category-{{ cat.id }}">{{ cat.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}"><i class="bi bi-house"></i> Home</a></li>
+            <li class="nav-item"><a class="nav-link active" href="{{ url_for('dashboard') }}"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+        </ul>
+        
+        <div class="ms-auto d-flex align-items-center">
+            <div class="dropdown">
+                <button class="btn btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown">
+                    <i class="bi bi-person-circle"></i> <span id="dashboardUsername">{{ session.username }}</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><span class="dropdown-item-text fw-bold">Admin</span></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{{ url_for('home') }}"><i class="bi bi-house"></i> Home</a></li>
+                    <li><a class="dropdown-item text-danger" href="{{ url_for('logout') }}" id="dashboardLogout"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show m-3" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<!-- Main Container -->
+<div class="container">
+
+    <div class="welc-msg">
+        <h2>Admin Dashboard</h2>
+        <p>Manage your bookstore</p>
+        <a href="{{ url_for('home') }}" class="btn btn-outline-primary"><i class="bi bi-house"></i> Go to Home</a>
+    </div>
+
+    <!-- Categories -->
+    {% for cat in categories %}
+    <section id="category-{{ cat.id }}" class="category">
+        
+        <div class="category-header">
+            <h2>{{ cat.name }}</h2>
+            <div>
+                <button class="btn btn-success btn-sm toggle-add-book" data-category="{{ cat.id }}">
+                    <i class="bi bi-plus-circle"></i> Add Book
+                </button>
+                <button class="btn btn-warning btn-sm edit-category-btn" 
+                        data-id="{{ cat.id }}" 
+                        data-name="{{ cat.name }}"
+                        data-bs-toggle="modal" 
+                        data-bs-target="#editCategoryModal"><i class="bi bi-pencil"></i> Edit</button>
+                <form action="{{ url_for('delete_category', category_id=cat.id) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this category and all its books?')"><i class="bi bi-trash"></i> Delete</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Books Grid -->
+        <div class="books-grid">
+            {% if cat.books %}
+                {% for book in cat.books %}
+                <div class="book-card">
+                    <div class="book-image">
+                        <img src="{{ url_for('static', filename='uploads/' + book.image) }}" 
+                             alt="{{ book.title }}"
+                             onerror="this.src='{{ url_for('static', filename='uploads/default_book.png') }}'">
+                    </div>
+                    <div class="book-content">
+                        <h3>{{ book.title }}</h3>
+                        <p class="book-description">{{ book.description }}</p>
+                        <div class="book-details">
+                            <span class="price">${{ "%.2f"|format(book.price) }}</span>
+                            <span class="stock">{{ book.stock }} in stock</span>
+                        </div>
+                        <div class="admin-buttons">
+                            <button class="btn btn-primary btn-sm edit-book-btn"
+                                    data-category="{{ cat.id }}"
+                                    data-book="{{ book.id }}"
+                                    data-title="{{ book.title }}"
+                                    data-description="{{ book.description }}"
+                                    data-price="{{ book.price }}"
+                                    data-stock="{{ book.stock }}"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#editBookModal"><i class="bi bi-pencil"></i> Edit</button>
+                            <form action="{{ url_for('delete_book', category_id=cat.id, book_id=book.id) }}" method="POST" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this book?')"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-category">
+                    <i class="bi bi-book"></i>
+                    <p>No books yet</p>
+                    <small>Click "Add Book" to add one</small>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Add Book Form -->
+        <div class="add-book-form" id="add-form-{{ cat.id }}">
+            <h4>Add Book to "{{ cat.name }}"</h4>
+            <form method="POST" action="{{ url_for('add_book', category_id=cat.id) }}" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="form-label">Title *</label>
+                        <input type="text" class="form-control" name="title" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Price *</label>
+                        <input type="number" step="0.01" class="form-control" name="price" required>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <label class="form-label">Description *</label>
+                    <textarea class="form-control" rows="3" name="description" required></textarea>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <label class="form-label">Stock *</label>
+                        <input type="number" class="form-control" name="stock" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Image</label>
+                        <input type="file" class="form-control" name="image" accept="image/*">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success mt-3"><i class="bi bi-plus-circle"></i> Save Book</button>
+                <button type="button" class="btn btn-secondary mt-3 toggle-add-book" data-category="{{ cat.id }}">Cancel</button>
+            </form>
+        </div>
+
+    </section>
+    {% endfor %}
+
+    <!-- Add Category -->
+    <section class="add-category-section">
+        <h3>Add New Category</h3>
+        <form action="{{ url_for('add_category') }}" method="POST" class="add-category-form">
+            <div class="row">
+                <div class="col-md-8">
+                    <input type="text" class="form-control" name="category_name" placeholder="Enter category name" required>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-success w-100"><i class="bi bi-plus-circle"></i> Add Category</button>
+                </div>
+            </div>
+        </form>
+    </section>
+
+</div>
+
+<!-- Edit Book Modal -->
+<div class="modal fade" id="editBookModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="editBookForm" method="POST" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Book</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <label>Title *</label>
+                    <input id="editTitle" class="form-control" name="title" required>
+                    <label class="mt-2">Description *</label>
+                    <textarea id="editDescription" class="form-control" rows="3" name="description" required></textarea>
+                    <label class="mt-2">Price *</label>
+                    <input id="editPrice" class="form-control" type="number" step="0.01" name="price" required>
+                    <label class="mt-2">Stock *</label>
+                    <input id="editStock" class="form-control" type="number" name="stock" required>
+                    <label class="mt-2">New Image (optional)</label>
+                    <input class="form-control" type="file" name="image" accept="image/*">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Category Modal -->
+<div class="modal fade" id="editCategoryModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="editCategoryForm" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Category</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <label>Category Name *</label>
+                    <input id="editCategoryName" class="form-control" name="category_name" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+<script>
+// ========== LOAD USER FROM LOCALSTORAGE ==========
+document.addEventListener('DOMContentLoaded', function() {
+    const user = getUserFromLocalStorage();
+    if (user) {
+        document.getElementById('dashboardUsername').textContent = user.username;
+    }
+});
+
+// ========== CLEAR LOCALSTORAGE ON LOGOUT ==========
+document.getElementById('dashboardLogout')?.addEventListener('click', function() {
+    clearUserFromLocalStorage();
+});
+</script>
+
+</body>
+</html>

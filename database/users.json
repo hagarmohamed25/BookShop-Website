@@ -3,6 +3,47 @@
         "username": "admin",
         "email": "admin@admin.com",
         "password": "123456",
-        "role": "ADMIN"
+        "role": "admin"
+    },
+    {
+        "username": "hagar",
+        "email": "test@test.com",
+        "password": "0",
+        "role": "customer"
+    },
+    {
+        "username": "sasa",
+        "email": "sasa@gmail.com",
+        "password": "123456789",
+        "role": "customer",
+        "created_at": "2026-07-20 16:33:42"
+    },
+    {
+        "username": "hagar2",
+        "email": "test2@test.com",
+        "password": "000000",
+        "role": "customer",
+        "created_at": "2026-07-21 13:06"
+    },
+    {
+        "username": "sasa4",
+        "email": "sasa4@gmail.com",
+        "password": "123123123",
+        "role": "customer",
+        "created_at": "2026-07-21 13:09"
+    },
+    {
+        "username": "sasa5",
+        "email": "sasa5@gmail.com",
+        "password": "123123",
+        "role": "customer",
+        "created_at": "2026-07-21 13:10"
+    },
+    {
+        "username": "hagar",
+        "email": "test@test.comwww",
+        "password": "123456",
+        "role": "customer",
+        "created_at": "2026-07-21 13:59"
     }
 ]
