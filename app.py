@@ -195,7 +195,7 @@ def logout():
 @app.route("/dashboard")
 def dashboard():
     if "username" not in session:
-        flash("Please login first!", "warning")
+        #flash("Please login first!", "warning")
         return redirect(url_for("login"))
     
     if session.get("role") != "admin":
@@ -205,6 +205,10 @@ def dashboard():
     categories = load_books()
     return render_template("dashboard.html", categories=categories)
 
+
+# =====================
+# CART
+# =====================
 
 # =====================
 # CART
@@ -227,8 +231,33 @@ def cart():
         phone = request.form.get("phone", "").strip()
         address = request.form.get("address", "").strip()
         
-        if not name or not phone or not address:
-            flash("Please fill in all fields!", "warning")
+        # ========== VALIDATION ==========
+        errors = []
+        
+        # Validate name
+        if not name:
+            errors.append("Full name is required!")
+        elif len(name) < 3:
+            errors.append("Name must be at least 3 characters!")
+        
+        # Validate phone (must be 11 digits)
+        if not phone:
+            errors.append("Phone number is required!")
+        elif not phone.isdigit():
+            errors.append("Phone number must contain only numbers!")
+        elif len(phone) != 11:
+            errors.append("Phone number must be exactly 11 digits!")
+        
+        # Validate address
+        if not address:
+            errors.append("Address is required!")
+        elif len(address) < 5:
+            errors.append("Address must be at least 5 characters!")
+        
+        # If there are errors, show them
+        if errors:
+            for error in errors:
+                flash(error, "warning")
             return redirect(url_for("cart"))
         
         # Clear the cart after successful order
@@ -261,7 +290,7 @@ def cart():
 @app.route("/add_to_cart/<int:book_id>", methods=["POST"])
 def add_to_cart(book_id):
     if "username" not in session:
-        flash("Please login first!", "warning")
+        #flash("Please login first!", "warning")
         return redirect(url_for("login"))
     
     if session.get("role") == "admin":

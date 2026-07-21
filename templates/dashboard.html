@@ -114,7 +114,7 @@
                         <h3>{{ book.title }}</h3>
                         <p class="book-description">{{ book.description }}</p>
                         <div class="book-details">
-                            <span class="price">${{ "%.2f"|format(book.price) }}</span>
+                            <span class="price">EGP{{ "%.2f"|format(book.price) }}</span>
                             <span class="stock">{{ book.stock }} in stock</span>
                         </div>
                         <div class="admin-buttons">

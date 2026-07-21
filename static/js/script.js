@@ -81,9 +81,3 @@ function validateQuantity(bookId, maxStock) {
 window.changeQty = changeQty;
 window.validateQuantity = validateQuantity;
 
-// ========== EXPOSE FUNCTIONS ==========
-window.changeQty = changeQty;
-window.saveUserToLocalStorage = saveUserToLocalStorage;
-window.getUserFromLocalStorage = getUserFromLocalStorage;
-window.clearUserFromLocalStorage = clearUserFromLocalStorage;
-window.isUserLoggedIn = isUserLoggedIn;

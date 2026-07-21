@@ -109,7 +109,7 @@
                      onerror="this.src='{{ url_for('static', filename='uploads/default_book.png') }}'">
                 <h3>{{ book.title }}</h3>
                 <p>{{ book.description[:100] }}{% if book.description|length > 100 %}...{% endif %}</p>
-                <div class="book-price">${{ "%.2f"|format(book.price) }}</div>
+                <div class="book-price">EGP{{ "%.2f"|format(book.price) }}</div>
                 <div class="book-stock">
                     {% if book.stock > 0 %}
                         <span class="text-success">In Stock ({{ book.stock }})</span>

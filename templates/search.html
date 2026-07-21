@@ -45,7 +45,7 @@
                      onerror="this.src='{{ url_for('static', filename='uploads/default_book.png') }}'">
                 <h3>{{ result.book.title }}</h3>
                 <p>{{ result.book.description[:100] }}...</p>
-                <div class="book-price">${{ "%.2f"|format(result.book.price) }}</div>
+                <div class="book-price">EGP{{ "%.2f"|format(result.book.price) }}</div>
                 <small class="text-muted">{{ result.category }}</small>
                 <a href="{{ url_for('home') }}#category-{{ loop.index }}" class="btn btn-outline-primary btn-sm mt-2">View</a>
             </div>
