@@ -296,3 +296,58 @@ body{
     }
 
 }
+
+/* ========== FIX: ADD CATEGORY SAME LINE ========== */
+.add-category-section {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    margin: 60px 0;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.add-category-form .row {
+    align-items: center;
+}
+
+.add-category-form .form-control {
+    padding: 10px 12px;
+    font-size: 14px;
+}
+
+.add-category-form small {
+    display: block;
+    margin-top: 4px;
+}
+
+.add-category-form .btn {
+    padding: 10px 12px;
+    font-size: 14px;
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .add-category-form .row {
+        flex-direction: column;
+    }
+    
+    .add-category-form .col-md-8,
+    .add-category-form .col-md-4 {
+        width: 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    .add-category-form .col-md-4 {
+        margin-top: 10px;
+    }
+    
+    .add-category-form .btn {
+        min-height: 44px;
+        width: 100%;
+    }
+}
