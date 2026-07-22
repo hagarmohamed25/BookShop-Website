@@ -1,7 +1,13 @@
 # BookShop - Online Bookstore Web Application
 
-A fully functional online bookstore web application built with Flask. Users can browse books by category, search for books, add items to their shopping cart, and place orders. The application includes an admin dashboard for managing categories, books, inventory, and orders.
+A fully functional online bookstore web application built with Flask. Users can browse books by category, search for books, add items to their shopping cart, and place orders. The application includes an admin dashboard for managing categories, books, inventory, and orders. BookShop is designed to be easy to use for both users and sellers.
 
+---
+## Home Page
+
+![Home Page](images/home.png)
+
+![Home Page](images/home2.png)
 ---
 
 ## Features
@@ -35,7 +41,7 @@ pip install flask
 ## Project Checklist
 
 ### ✅ It is available on GitHub.
-**Repository**: [Your GitHub repository URL]
+**Repository**: (https://github.com/hagarmohamed25/BookShop-Website)
 
 ### ✅ It uses the Flask web framework.
 **File**: `app.py` - Full Flask application with routes, sessions, and templates.
@@ -44,9 +50,9 @@ pip install flask
 
 | Module | Usage | File |
 |--------|-------|------|
-| `datetime` | User registration timestamps | `app.py` line 84 |
-| `uuid` | Unique image filenames | `app.py` lines 303, 360 |
-| `re` | Email and phone validation | `app.py` lines 68, 442 |
+| `datetime` | User registration timestamps | `app.py` line 72 |
+| `uuid` | Unique image filenames | `app.py` lines 465, 537 |
+| `re` | Email and phone validation | `app.py` lines 45, 170 |
 | `json` | File I/O for data persistence | `models.py` |
 | `os` | File path operations | `app.py`, `models.py` |
 
@@ -55,10 +61,9 @@ pip install flask
 | Item | Details |
 |------|---------|
 | **File name for the class definition** | `models.py` |
-| **Line number(s) for the class definition** | Lines 7-40 |
+| **Line number(s) for the class definition** | Lines 7 |
 | **Name of two properties** | `USERS_FILE`, `BOOKS_FILE` |
 | **Name of two methods** | `load_users()`, `save_users()`, `load_books()`, `save_books()` |
-| **File name and line numbers where the methods are used** | `app.py` lines 45, 87, 103, 255, 295, 306, etc. |
 
 ### ✅ It makes use of JavaScript in the front end and uses the localStorage of the web browser.
 **File**: `static/js/script.js` - Complete localStorage implementation for user data persistence.
@@ -73,19 +78,19 @@ pip install flask
 
 | File | Line Number(s) | Description |
 |------|---------------|-------------|
-| `app.py` | 74-76 | User login authentication |
-| `app.py` | 109-113 | Role-based redirects |
-| `app.py` | 165-167 | Stock validation |
-| `app.py` | 232-236 | Category name validation |
-| `app.py` | 458-465 | Phone number validation |
+| `app.py` | 94 | User login authentication |
+| `app.py` | 102 | Role-based redirects |
+| `app.py` | 242 | Stock validation |
+| `app.py` | 322 | Category name validation |
+| `app.py` | 177, 179, 181 | Phone number validation |
 
 ### ✅ It contains loops.
 
-| File | Line Number(s) | Description |
+| File | Line Numbers | Description |
 |------|---------------|-------------|
-| `app.py` | 74-77 | Loop through users for login authentication |
-| `app.py` | 245-247 | Loop through categories to check for duplicates |
-| `app.py` | 436-438 | Loop through books for search functionality |
+| `app.py` | 93 | Loop through users for login authentication |
+| `app.py` | 334 | Loop through categories to check for duplicates |
+| `app.py` | 591, 592 | Loop through books for search functionality |
 
 ### ✅ It lets the user enter a value in a text box at some point. This value is received and processed by your back end Python code.
 **Examples**:
@@ -115,7 +120,7 @@ All course exercises are completed and pushed to the GitHub repository.
 
 1. **Clone the repository**:
    ```bash
-   git clone [your-repository-url]
+   git clone (https://github.com/hagarmohamed25/BookShop-Website)
    cd bookshop
    ```
 
@@ -179,9 +184,9 @@ bookshop/
 ## Technologies Used
 
 - **Backend**: Python, Flask
-- **Frontend**: HTML5, CSS3, JavaScript (ES6)
+- **Frontend**: HTML5, CSS3, JavaScript
 - **Data Storage**: JSON files
-- **Styling**: Custom CSS with Bootstrap 5
+- **Styling**: Custom CSS with Bootstrap
 - **Icons**: Bootstrap Icons, Font Awesome
 
 ---
