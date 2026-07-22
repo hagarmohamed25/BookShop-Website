@@ -662,3 +662,69 @@ form.auth-form {
     
     .qty-control button { width: 26px; height: 26px; font-size: 14px; }
 }
+
+/* ========== CART VALIDATION ========== */
+.validation-error {
+    color: #dc3545;
+    font-size: 13px;
+    margin-top: 4px;
+    display: none;
+}
+.validation-error.show {
+    display: block;
+}
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+.is-valid {
+    border-color: #28a745 !important;
+}
+
+/* ========== ORDER MODAL ========== */
+.modal-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1050;
+}
+.modal-overlay.hidden {
+    display: none;
+}
+.modal-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 450px;
+    width: 90%;
+    z-index: 1060;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+.modal-box.hidden {
+    display: none;
+}
+
+/* ========== AUTH VALIDATION ========== */
+.validation-error {
+    color: #dc3545;
+    font-size: 13px;
+    margin-top: 4px;
+    display: none;
+}
+.validation-error.show {
+    display: block;
+}
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+.is-valid {
+    border-color: #28a745 !important;
+}

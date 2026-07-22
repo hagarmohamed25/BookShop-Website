@@ -47,8 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // ========== SMOOTH SCROLL TO CATEGORY (without localStorage) ==========
-    // Check URL hash on load
+    // ========== SMOOTH SCROLL TO CATEGORY ==========
     if (window.location.hash) {
         const target = document.querySelector(window.location.hash);
         if (target) {
@@ -56,5 +55,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 target.scrollIntoView({ behavior: 'smooth' });
             }, 300);
         }
+    }
+    
+    // ========== LOAD USER FROM LOCALSTORAGE ==========
+    const user = getUserFromLocalStorage();
+    if (user) {
+        const usernameSpan = document.getElementById('dashboardUsername');
+        if (usernameSpan) {
+            usernameSpan.textContent = user.username;
+        }
+    }
+    
+    // ========== CLEAR LOCALSTORAGE ON LOGOUT ==========
+    const logoutBtn = document.getElementById('dashboardLogout');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+            clearUserFromLocalStorage();
+        });
     }
 });

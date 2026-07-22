@@ -66,5 +66,19 @@
         "password": "000000",
         "role": "customer",
         "created_at": "2026-07-21 17:38"
+    },
+    {
+        "username": "Mohamed",
+        "email": "mohamed@gmail.com",
+        "password": "123456",
+        "role": "customer",
+        "created_at": "2026-07-22 17:40"
+    },
+    {
+        "username": "Sara Salah",
+        "email": "sara@gmail.com",
+        "password": "123123123",
+        "role": "customer",
+        "created_at": "2026-07-22 17:45"
     }
 ]

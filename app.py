@@ -127,7 +127,6 @@ def logout():
 @app.route("/dashboard")
 def dashboard():
     if "username" not in session:
-        #flash("Please login first!", "warning")
         return redirect(url_for("login"))
     
     if session.get("role") != "admin":
@@ -145,7 +144,6 @@ def dashboard():
 @app.route("/cart", methods=["GET", "POST"])
 def cart():
     if "username" not in session:
-        flash("Please login first!", "warning")
         return redirect(url_for("login"))
     
     # Admin cannot use cart
@@ -225,7 +223,6 @@ def cart():
 @app.route("/add_to_cart/<int:book_id>", methods=["POST"])
 def add_to_cart(book_id):
     if "username" not in session:
-        #flash("Please login first!", "warning")
         return redirect(url_for("login"))
     
     if session.get("role") == "admin":
