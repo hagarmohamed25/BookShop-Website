@@ -8,9 +8,6 @@ from helpers import get_next_id, get_next_book_id, find_category, find_book_by_i
 app = Flask(__name__)
 app.secret_key = "bookshop_secret_key"
 
-# File paths
-# USERS_FILE = "database/users.json"
-# BOOKS_FILE = "database/books.json"
 UPLOAD_FOLDER = "static/uploads"
 
 # Create folders if they don't exist
@@ -76,7 +73,6 @@ def register():
         })
         book_shop_app.save_users(users)
         
-        flash("Registration successful! Please login.", "success")
         return redirect(url_for("login"))
 
     return render_template("register.html")
@@ -209,7 +205,7 @@ def cart():
     cart_books = []
     total = 0
     
-    categories = book_shop_app.load_books()
+    books = book_shop_app.load_books()
     for book_id, qty in cart_items.items():
         book_found, category = find_book_by_id(int(book_id),book_shop_app)
         if book_found:
@@ -392,15 +388,10 @@ def edit_category(category_id):
         flash("Category name must start with a letter!", "warning")
         return redirect(url_for("dashboard"))
     
-    categories = load_books()
-    
-    # ========== CHECK FOR DUPLICATE BOOK (excluding current book) ==========
-    for category in categories:
-        for book in category.get("books", []):
-            # Check if another book (with different ID) has the same title
-            if book["title"].lower() == title.lower() and book["id"] != book_id:
-                flash(f"Book '{title}' already exists in category '{category['name']}'!", "warning")
-                return redirect(url_for("dashboard"))
+    # Check minimum length
+    if len(name) < 2:
+        flash("Category name must be at least 2 characters!", "warning")
+        return redirect(url_for("dashboard"))
     
     categories = book_shop_app.load_books()
     for cat in categories:
