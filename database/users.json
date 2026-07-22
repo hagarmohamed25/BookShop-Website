@@ -45,5 +45,26 @@
         "password": "123456",
         "role": "customer",
         "created_at": "2026-07-21 13:59"
+    },
+    {
+        "username": "hagar3",
+        "email": "test@test",
+        "password": "000000",
+        "role": "customer",
+        "created_at": "2026-07-21 17:30"
+    },
+    {
+        "username": "hagar4",
+        "email": "test@test4",
+        "password": "000000",
+        "role": "customer",
+        "created_at": "2026-07-21 17:32"
+    },
+    {
+        "username": "hagar",
+        "email": "test@test.com0",
+        "password": "000000",
+        "role": "customer",
+        "created_at": "2026-07-21 17:38"
     }
 ]

@@ -121,6 +121,13 @@ def register():
         password = request.form.get("password", "")
         confirm = request.form.get("confirm_password", "")
 
+        # ========== EMAIL VALIDATION ==========
+        import re
+        email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        
+        if not re.match(email_pattern, email):
+            return render_template("register.html", error="Please enter a valid email address (e.g., name@domain.com)!")
+
         # Validation
         if len(password) < 6:
             return render_template("register.html", error="Your password should be more than 6 digits!")
@@ -170,7 +177,12 @@ def login():
                 session["role"] = user["role"]
                 
                 flash(f"Welcome {user['username']}!", "success")
-                return redirect(url_for("home"))
+                
+                # Redirect based on role
+                if user["role"] == "admin":
+                    return redirect(url_for("dashboard"))
+                else:
+                    return redirect(url_for("home"))
 
         return render_template("login.html", error="Invalid email or password!")
 
@@ -210,10 +222,6 @@ def dashboard():
 # CART
 # =====================
 
-# =====================
-# CART
-# =====================
-
 @app.route("/cart", methods=["GET", "POST"])
 def cart():
     if "username" not in session:
@@ -232,6 +240,7 @@ def cart():
         address = request.form.get("address", "").strip()
         
         # ========== VALIDATION ==========
+        import re
         errors = []
         
         # Validate name
@@ -240,13 +249,19 @@ def cart():
         elif len(name) < 3:
             errors.append("Name must be at least 3 characters!")
         
-        # Validate phone (must be 11 digits)
+        # ========== PHONE VALIDATION ==========
+        # Egyptian phone numbers: 11 digits starting with 01
+        # Valid formats: 010, 011, 012, 015 (for Vodafone, Orange, Etisalat, We)
+        phone_pattern = r'^01[0125][0-9]{8}$'
+        
         if not phone:
             errors.append("Phone number is required!")
         elif not phone.isdigit():
             errors.append("Phone number must contain only numbers!")
         elif len(phone) != 11:
             errors.append("Phone number must be exactly 11 digits!")
+        elif not re.match(phone_pattern, phone):
+            errors.append("Please enter a valid Egyptian phone number (e.g., 01012345678)!")
         
         # Validate address
         if not address:
@@ -380,8 +395,20 @@ def add_category():
         return redirect(url_for("home"))
     
     name = request.form.get("category_name", "").strip()
+    
+    # ========== CATEGORY VALIDATION ==========
     if not name:
         flash("Category name is required!", "warning")
+        return redirect(url_for("dashboard"))
+    
+    # Check if starts with a letter
+    if not name[0].isalpha():
+        flash("Category name must start with a letter!", "warning")
+        return redirect(url_for("dashboard"))
+    
+    # Check minimum length
+    if len(name) < 2:
+        flash("Category name must be at least 2 characters!", "warning")
         return redirect(url_for("dashboard"))
     
     categories = load_books()
@@ -430,8 +457,20 @@ def edit_category(category_id):
         return redirect(url_for("home"))
     
     name = request.form.get("category_name", "").strip()
+    
+    # ========== CATEGORY VALIDATION ==========
     if not name:
         flash("Category name is required!", "warning")
+        return redirect(url_for("dashboard"))
+    
+    # Check if starts with a letter
+    if not name[0].isalpha():
+        flash("Category name must start with a letter!", "warning")
+        return redirect(url_for("dashboard"))
+    
+    # Check minimum length
+    if len(name) < 2:
+        flash("Category name must be at least 2 characters!", "warning")
         return redirect(url_for("dashboard"))
     
     categories = load_books()

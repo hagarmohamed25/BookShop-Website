@@ -173,8 +173,8 @@
                     <!-- Phone Field -->
                     <div class="col-md-6">
                         <label class="form-label">Phone *</label>
-                        <input type="text" class="form-control" id="phoneNumber" name="phone" placeholder="Enter 11 digits" maxlength="11" required>
-                        <div class="validation-error" id="phoneError">Phone must be exactly 11 digits (numbers only)!</div>
+                        <input type="text" class="form-control" id="phoneNumber" name="phone" placeholder="01xxxxxxxxx" maxlength="11" required>
+                        <div class="validation-error" id="phoneError">Please enter a valid Egyptian phone number (e.g., 01012345678)!</div>
                     </div>
                 </div>
                 
@@ -231,7 +231,6 @@ if (logoutBtn) {
 }
 
 // ========== CART FORM VALIDATION ==========
-// Only run if the form exists (cart has items)
 const form = document.getElementById('orderForm');
 
 if (form) {
@@ -242,6 +241,10 @@ if (form) {
     const nameError = document.getElementById('nameError');
     const phoneError = document.getElementById('phoneError');
     const addressError = document.getElementById('addressError');
+
+    // ========== EGYPTIAN PHONE PATTERN ==========
+    // Valid: 010, 011, 012, 015 followed by 8 digits
+    const phonePattern = /^01[0125][0-9]{8}$/;
 
     // ========== VALIDATE NAME ==========
     function validateName() {
@@ -265,6 +268,7 @@ if (form) {
     function validatePhone() {
         if (!phoneInput) return false;
         const value = phoneInput.value.trim();
+        
         // Check if contains only numbers
         if (value.length > 0 && !/^\d+$/.test(value)) {
             phoneInput.classList.add('is-invalid');
@@ -275,7 +279,7 @@ if (form) {
             }
             return false;
         }
-        // Check if exactly 11 digits
+        // Check length
         else if (value.length > 0 && value.length !== 11) {
             phoneInput.classList.add('is-invalid');
             phoneInput.classList.remove('is-valid');
@@ -285,8 +289,18 @@ if (form) {
             }
             return false;
         }
+        // Check Egyptian phone pattern (010, 011, 012, 015)
+        else if (value.length === 11 && !phonePattern.test(value)) {
+            phoneInput.classList.add('is-invalid');
+            phoneInput.classList.remove('is-valid');
+            if (phoneError) {
+                phoneError.textContent = 'Enter a valid Egyptian number (010, 011, 012, or 015 followed by 8 digits)';
+                phoneError.classList.add('show');
+            }
+            return false;
+        }
         // Valid phone
-        else if (value.length === 11 && /^\d+$/.test(value)) {
+        else if (value.length === 11 && phonePattern.test(value)) {
             phoneInput.classList.remove('is-invalid');
             phoneInput.classList.add('is-valid');
             if (phoneError) phoneError.classList.remove('show');
@@ -339,6 +353,15 @@ if (form) {
         phoneInput.addEventListener('input', function() {
             // Remove any non-digit characters
             this.value = this.value.replace(/\D/g, '');
+        });
+    }
+
+    // ========== PHONE: AUTO-START WITH 01 ==========
+    if (phoneInput) {
+        phoneInput.addEventListener('focus', function() {
+            if (this.value === '') {
+                // Don't auto-fill, just show hint
+            }
         });
     }
 

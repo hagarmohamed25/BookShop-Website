@@ -179,20 +179,25 @@
     </section>
     {% endfor %}
 
-    <!-- Add Category -->
-    <section class="add-category-section">
-        <h3>Add New Category</h3>
-        <form action="{{ url_for('add_category') }}" method="POST" class="add-category-form">
-            <div class="row">
-                <div class="col-md-8">
-                    <input type="text" class="form-control" name="category_name" placeholder="Enter category name" required>
-                </div>
-                <div class="col-md-4">
-                    <button type="submit" class="btn btn-success w-100"><i class="bi bi-plus-circle"></i> Add Category</button>
-                </div>
+<!-- Add Category Section -->
+<section class="add-category-section">
+    <h3>Add New Category</h3>
+    <form action="{{ url_for('add_category') }}" method="POST" class="add-category-form">
+        <div class="row">
+            <div class="col-md-8">
+                <input type="text" class="form-control" name="category_name" 
+                       placeholder="Enter category name (must start with a letter)" 
+                       pattern="[A-Za-z].*" 
+                       title="Category name must start with a letter" 
+                       required>
+                <small class="text-muted">Category name must start with a letter</small>
             </div>
-        </form>
-    </section>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-success w-100"><i class="bi bi-plus-circle"></i> Add Category</button>
+            </div>
+        </div>
+    </form>
+</section>
 
 </div>
 

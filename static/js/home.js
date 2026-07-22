@@ -1,3 +1,21 @@
+// ========== TOGGLE DESCRIPTION ==========
+function toggleDescription(bookId) {
+    const desc = document.getElementById('desc-' + bookId);
+    if (!desc) return;
+    
+    const wrapper = desc.parentElement;
+    const btn = wrapper.querySelector('.read-more-btn');
+    if (!btn) return;
+    
+    if (desc.classList.contains('collapsed')) {
+        desc.classList.remove('collapsed');
+        btn.textContent = 'Read less';
+    } else {
+        desc.classList.add('collapsed');
+        btn.textContent = 'Read more';
+    }
+}
+
 // ========== QUANTITY CONTROL WITH STOCK LIMIT ==========
 function changeQty(bookId, change, maxStock) {
     const qtySpan = document.getElementById('qty' + bookId);
@@ -8,13 +26,10 @@ function changeQty(bookId, change, maxStock) {
     let current = parseInt(qtySpan.textContent) || 1;
     current += change;
     
-    // Don't go below 1
     if (current < 1) current = 1;
     
-    // Don't exceed stock
     if (maxStock && current > maxStock) {
         current = maxStock;
-        // Show warning to user
         alert(`Only ${maxStock} items available in stock!`);
     }
     
@@ -40,3 +55,4 @@ function validateQuantity(bookId, maxStock) {
 // ========== EXPOSE FUNCTIONS ==========
 window.changeQty = changeQty;
 window.validateQuantity = validateQuantity;
+window.toggleDescription = toggleDescription;

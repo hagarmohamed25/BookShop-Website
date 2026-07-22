@@ -43,36 +43,50 @@
             "name": "Comedy",
             "books": [
                 {
-                    "id": 1,
-                    "title": "The Hitchhiker's Guide to the Galaxy",
-                    "description": "A hilarious, absurdist sci-fi classic that follows an ordinary human as he travels across the universe after Earth is destroyed to make way for a hyperspace bypass.",
-                    "price": 125.0,
-                    "stock": 8,
-                    "image": "d0e4363a-357e-4668-a570-ea166aded8ef.webp"
-                },
-                {
-                    "id": 2,
-                    "title": "Me Talk Pretty One Day",
-                    "description": "A brilliant collection of autobiographical essays where the author recounts his awkward youth and the hilarious struggles of moving to France as an adult and attempting to learn French.",
-                    "price": 150.0,
-                    "stock": 5,
-                    "image": "94586f12-4448-4a27-ad4c-2ca943116af6.webp"
-                },
-                {
-                    "id": 3,
-                    "title": "A Confederacy of Dunces by John Kennedy Toole",
-                    "description": "A posthumous Pulitzer Prize-winning masterpiece that follows Ignatius J. Reilly, a hilarious and eccentric eccentric through New Orleans.",
-                    "price": 100.0,
-                    "stock": 11,
-                    "image": "cc638a39-0d55-473e-b9af-e174b3fdb25c.jpg"
-                },
-                {
                     "id": 5,
                     "title": "Furiously Happy",
                     "description": "A humor memoir tinged with just enough tragedy and pathos to make it worthwhile, Jenny Lawson examines her own experience with severe depression.",
                     "price": 180.0,
                     "stock": 0,
                     "image": "3d4184dd-2ce6-49b0-b988-ebd1cf82d6b4.jpg"
+                },
+                {
+                    "id": 7,
+                    "title": "The Hitchhiker's Guide to the Galaxy",
+                    "description": "A hilarious, absurdist sci-fi classic that follows an ordinary human as he travels across the universe after Earth is destroyed to make way for a hyperspace bypass.",
+                    "price": 125.0,
+                    "stock": 8,
+                    "image": "616bbba1-1080-457d-b422-5807f7a2d93b.webp"
+                },
+                {
+                    "id": 8,
+                    "title": "A Confederacy of Dunces by John Kennedy Toole",
+                    "description": "A posthumous Pulitzer Prize-winning masterpiece that follows Ignatius J. Reilly, a hilarious and eccentric eccentric through New Orleans.",
+                    "price": 100.0,
+                    "stock": 11,
+                    "image": "749a6437-10f1-4fa9-893c-6594a87367ba.jpg"
+                },
+                {
+                    "id": 9,
+                    "title": "Me Talk Pretty One Day",
+                    "description": "A brilliant collection of autobiographical essays where the author recounts his awkward youth and the hilarious struggles of moving to France as an adult and attempting to learn French.",
+                    "price": 150.0,
+                    "stock": 5,
+                    "image": "16ba54c6-3278-4143-bb99-b50e0a8f63b6.webp"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Romance",
+            "books": [
+                {
+                    "id": 6,
+                    "title": "fdf",
+                    "description": "humor memoir tinged with just enough tragedy and pathos to make it worthwhile, Jenny Lawson examines her own experience with severe depressionhumor memoir tinged with just enough tragedy and pathos to make it worthwhile, Jenny Lawson examines her own experience with severe depression",
+                    "price": 66.0,
+                    "stock": 8,
+                    "image": "8f5e15eb-1875-4124-82be-c7bc16041624.webp"
                 }
             ]
         }

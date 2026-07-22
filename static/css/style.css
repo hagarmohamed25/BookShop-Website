@@ -128,12 +128,14 @@ body {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
+/* ========== BOOK IMAGE - CENTERED ========== */
 .book-card img {
-    width: 120px;
-    height: 170px;
+    width: 140px;
+    height: 200px;
     object-fit: cover;
     border-radius: 6px;
-    margin: 0 auto 10px;
+    margin: 0 auto 12px;
+    display: block;
 }
 
 .book-card h3 {
@@ -142,12 +144,38 @@ body {
     margin: 8px 0 4px;
 }
 
-.book-card p {
-    font-size: 13px;
-    color: #555;
+/* ========== DESCRIPTION ========== */
+.book-description-wrapper {
     flex: 1;
     margin-bottom: 10px;
-    line-height: 1.4;
+}
+
+.book-description-text {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 5px;
+}
+
+.book-description-text.collapsed {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.read-more-btn {
+    background: none;
+    border: none;
+    color: #0d6efd;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 0;
+    text-decoration: underline;
+}
+
+.read-more-btn:hover {
+    color: #0b5ed7;
 }
 
 .book-price {
@@ -622,7 +650,7 @@ form.auth-form {
     .nav-link { font-size: 13px; padding: 4px 8px !important; }
     
     .book-card { padding: 14px; }
-    .book-card img { width: 100px; height: 140px; }
+    .book-card img { width: 120px; height: 170px; }
     .book-card h3 { font-size: 15px; }
     
     .info-group { padding: 15px 18px; }

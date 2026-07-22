@@ -5,35 +5,246 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .validation-error {
+            color: #dc3545;
+            font-size: 13px;
+            margin-top: 4px;
+            display: none;
+        }
+        .validation-error.show {
+            display: block;
+        }
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
+        .is-valid {
+            border-color: #28a745 !important;
+        }
+        .input-feedback {
+            font-size: 13px;
+            margin-top: 4px;
+        }
+        .input-feedback.valid {
+            color: #28a745;
+        }
+        .input-feedback.invalid {
+            color: #dc3545;
+        }
+    </style>
 </head>
 <body class="auth-page">
-    <form action="{{ url_for('register') }}" method="POST" class="auth-form">
+    <form action="{{ url_for('register') }}" method="POST" class="auth-form" id="registerForm">
         <div class="info-group">
-            <h2 class="text-center mb-3">📚 Register</h2>
+            <h2 class="text-center mb-3">Register</h2>
             
+            <!-- Username -->
             <label for="username">Name</label>
             <input type="text" id="username" name="username" placeholder="Enter your name" required>
+            <div class="validation-error" id="usernameError">Name must be at least 2 characters!</div>
             
+            <!-- Email -->
             <label for="email">Email</label>
             <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            <div class="validation-error" id="emailError">Please enter a valid email (e.g., name@domain.com)!</div>
             
+            <!-- Password -->
             <label for="pass">Password</label>
             <input type="password" id="pass" name="password" placeholder="Enter your password" required>
-            <div id="pass_error" style="display:none; color:#dc3545; font-size:13px; margin-top:3px;">Your password should be more than 6 digits!</div>
+            <div class="validation-error" id="passError">Your password should be more than 6 digits!</div>
             
+            <!-- Confirm Password -->
             <label for="conf_pass">Confirm Password</label>
             <input type="password" id="conf_pass" name="confirm_password" placeholder="Confirm your password" required>
-            <div id="conf_error" style="display:none; color:#dc3545; font-size:13px; margin-top:3px;">Passwords do not match!</div>
+            <div class="validation-error" id="confError">Passwords do not match!</div>
             
             {% if error %}
                 <p class="error-msg">{{ error }}</p>
             {% endif %}
             
-            <button type="submit">Register</button>
+            <button type="submit" id="registerBtn">Register</button>
             <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
         </div>
     </form>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('registerForm');
+        
+        // Get all inputs
+        const usernameInput = document.getElementById('username');
+        const emailInput = document.getElementById('email');
+        const passInput = document.getElementById('pass');
+        const confInput = document.getElementById('conf_pass');
+        
+        // Get error elements
+        const usernameError = document.getElementById('usernameError');
+        const emailError = document.getElementById('emailError');
+        const passError = document.getElementById('passError');
+        const confError = document.getElementById('confError');
+
+        // ========== EMAIL VALIDATION PATTERN ==========
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        // ========== VALIDATE USERNAME ==========
+        function validateUsername() {
+            const value = usernameInput.value.trim();
+            if (value.length < 2 && value.length > 0) {
+                usernameInput.classList.add('is-invalid');
+                usernameInput.classList.remove('is-valid');
+                usernameError.classList.add('show');
+                return false;
+            } else if (value.length >= 2) {
+                usernameInput.classList.remove('is-invalid');
+                usernameInput.classList.add('is-valid');
+                usernameError.classList.remove('show');
+                return true;
+            }
+            return false;
+        }
+
+        // ========== VALIDATE EMAIL ==========
+        function validateEmail() {
+            const value = emailInput.value.trim();
+            if (value.length > 0 && !emailPattern.test(value)) {
+                emailInput.classList.add('is-invalid');
+                emailInput.classList.remove('is-valid');
+                emailError.classList.add('show');
+                return false;
+            } else if (value.length > 0 && emailPattern.test(value)) {
+                emailInput.classList.remove('is-invalid');
+                emailInput.classList.add('is-valid');
+                emailError.classList.remove('show');
+                return true;
+            }
+            return false;
+        }
+
+        // ========== VALIDATE PASSWORD ==========
+        function validatePassword() {
+            const value = passInput.value;
+            if (value.length < 6 && value.length > 0) {
+                passInput.classList.add('is-invalid');
+                passInput.classList.remove('is-valid');
+                passError.classList.add('show');
+                return false;
+            } else if (value.length >= 6) {
+                passInput.classList.remove('is-invalid');
+                passInput.classList.add('is-valid');
+                passError.classList.remove('show');
+                return true;
+            }
+            return false;
+        }
+
+        // ========== VALIDATE CONFIRM PASSWORD ==========
+        function validateConfirm() {
+            const pass = passInput.value;
+            const conf = confInput.value;
+            if (conf.length > 0 && conf !== pass) {
+                confInput.classList.add('is-invalid');
+                confInput.classList.remove('is-valid');
+                confError.classList.add('show');
+                return false;
+            } else if (conf.length > 0 && conf === pass) {
+                confInput.classList.remove('is-invalid');
+                confInput.classList.add('is-valid');
+                confError.classList.remove('show');
+                return true;
+            }
+            return false;
+        }
+
+        // ========== REAL-TIME VALIDATION ==========
+        usernameInput.addEventListener('input', validateUsername);
+        emailInput.addEventListener('input', validateEmail);
+        passInput.addEventListener('input', function() {
+            validatePassword();
+            // Also re-validate confirm password if it has value
+            if (confInput.value.length > 0) {
+                validateConfirm();
+            }
+        });
+        confInput.addEventListener('input', validateConfirm);
+
+        // ========== FORM SUBMIT VALIDATION ==========
+        form.addEventListener('submit', function(e) {
+            // Run all validations
+            const isUsernameValid = validateUsername();
+            const isEmailValid = validateEmail();
+            const isPassValid = validatePassword();
+            const isConfValid = validateConfirm();
+
+            // Check if all fields are valid
+            if (!isUsernameValid || !isEmailValid || !isPassValid || !isConfValid) {
+                e.preventDefault();
+                
+                // Show errors for empty fields
+                if (usernameInput.value.trim() === '') {
+                    usernameInput.classList.add('is-invalid');
+                    usernameError.textContent = 'Name is required!';
+                    usernameError.classList.add('show');
+                }
+                if (emailInput.value.trim() === '') {
+                    emailInput.classList.add('is-invalid');
+                    emailError.textContent = 'Email is required!';
+                    emailError.classList.add('show');
+                }
+                if (passInput.value === '') {
+                    passInput.classList.add('is-invalid');
+                    passError.textContent = 'Password is required!';
+                    passError.classList.add('show');
+                }
+                if (confInput.value === '') {
+                    confInput.classList.add('is-invalid');
+                    confError.textContent = 'Please confirm your password!';
+                    confError.classList.add('show');
+                }
+                
+                // Scroll to first error
+                const firstError = document.querySelector('.is-invalid');
+                if (firstError) {
+                    firstError.focus();
+                }
+            }
+        });
+
+        // ========== CLEAR ERRORS ON FOCUS ==========
+        usernameInput.addEventListener('focus', function() {
+            if (this.value.trim() === '') {
+                this.classList.remove('is-invalid');
+                usernameError.classList.remove('show');
+                usernameError.textContent = 'Name must be at least 2 characters!';
+            }
+        });
+        
+        emailInput.addEventListener('focus', function() {
+            if (this.value.trim() === '') {
+                this.classList.remove('is-invalid');
+                emailError.classList.remove('show');
+                emailError.textContent = 'Please enter a valid email (e.g., name@domain.com)!';
+            }
+        });
+        
+        passInput.addEventListener('focus', function() {
+            if (this.value === '') {
+                this.classList.remove('is-invalid');
+                passError.classList.remove('show');
+                passError.textContent = 'Your password should be more than 6 digits!';
+            }
+        });
+        
+        confInput.addEventListener('focus', function() {
+            if (this.value === '') {
+                this.classList.remove('is-invalid');
+                confError.classList.remove('show');
+                confError.textContent = 'Passwords do not match!';
+            }
+        });
+    });
+    </script>
+
 </body>
 </html>
