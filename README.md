@@ -5,9 +5,9 @@ A fully functional online bookstore web application built with Flask. Users can 
 ---
 ## Home Page
 
-![Home Page](images/home.png)
+![Home Page](static/images/home.png)
 
-![Home Page](images/home2.png)
+![Home Page](static/images/home2.png)
 ---
 
 ## Features
