@@ -4,7 +4,7 @@ import os
 import uuid
 from datetime import datetime
 from models import Book_Shop
-from helpers import get_next_id, get_next_book_id, find_category, find_book_by_id
+from helpers import get_next_id, get_next_book_id, find_category, find_book_by_id, is_book_duplicate
 app = Flask(__name__)
 app.secret_key = "bookshop_secret_key"
 
@@ -413,7 +413,7 @@ def add_book(category_id):
         flash("Admin only!", "danger")
         return redirect(url_for("home"))
     
-    cat = find_category(category_id,book_shop_app)
+    cat = find_category(category_id, book_shop_app)
     if not cat:
         flash("Category not found!", "danger")
         return redirect(url_for("dashboard"))
@@ -432,20 +432,45 @@ def add_book(category_id):
         flash("Invalid price or stock value!", "warning")
         return redirect(url_for("dashboard"))
     
-    # Handle image
-    image = request.files.get("image")
-    filename = "default_book.png"
+    # ========== CHECK FOR DUPLICATE BOOK ==========
+    is_duplicate, category_name = is_book_duplicate(title, book_shop_app)
+    if is_duplicate:
+        flash(f"Book '{title}' already exists in category '{category_name}'!", "warning")
+        return redirect(url_for("dashboard"))
     
-    if image and image.filename:
-        ext = os.path.splitext(image.filename)[1].lower()
-        if ext in [".png", ".jpg", ".jpeg", ".gif", ".webp"]:
-            filename = str(uuid.uuid4()) + ext
-            image.save(os.path.join(UPLOAD_FOLDER, filename))
+    # ========== IMAGE VALIDATION ==========
+    image = request.files.get("image")
+    
+    # Check if image was uploaded
+    if not image or image.filename == "":
+        flash("Book image is required! Please upload an image.", "warning")
+        return redirect(url_for("dashboard"))
+    
+    # Check file extension
+    ext = os.path.splitext(image.filename)[1].lower()
+    allowed_extensions = [".png", ".jpg", ".jpeg", ".gif", ".webp"]
+    
+    if ext not in allowed_extensions:
+        flash(f"Invalid image format! Please use: {', '.join(allowed_extensions)}", "warning")
+        return redirect(url_for("dashboard"))
+    
+    # Check file size (optional - limit to 5MB)
+    image.seek(0, os.SEEK_END)
+    file_size = image.tell()
+    image.seek(0)  # Reset file pointer
+    
+    max_size = 5 * 1024 * 1024  # 5MB
+    if file_size > max_size:
+        flash("Image file is too large! Maximum size is 5MB.", "warning")
+        return redirect(url_for("dashboard"))
+    
+    # Save the image
+    filename = str(uuid.uuid4()) + ext
+    image.save(os.path.join(UPLOAD_FOLDER, filename))
     
     categories = book_shop_app.load_books()
     for c in categories:
         if c["id"] == category_id:
-            # Use unique book ID across all categories
             c["books"].append({
                 "id": get_next_book_id(book_shop_app),
                 "title": title,
@@ -459,7 +484,6 @@ def add_book(category_id):
     book_shop_app.save_books(categories)
     flash("Book added successfully!", "success")
     return redirect(url_for("dashboard"))
-
 
 # =====================
 # ADMIN - EDIT BOOK
@@ -483,6 +507,12 @@ def edit_book(category_id, book_id):
         stock = int(request.form.get("stock", 0))
     except ValueError:
         flash("Invalid price or stock value!", "warning")
+        return redirect(url_for("dashboard"))
+    
+    # ========== CHECK FOR DUPLICATE BOOK (excluding current book) ==========
+    is_duplicate, category_name = is_book_duplicate(title, book_shop_app, exclude_book_id=book_id)
+    if is_duplicate:
+        flash(f"Book '{title}' already exists in category '{category_name}'!", "warning")
         return redirect(url_for("dashboard"))
     
     categories = book_shop_app.load_books()

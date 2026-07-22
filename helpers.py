@@ -35,11 +35,16 @@ def find_book_by_id(book_id, book_shop_app):
                 return book, cat
     return None, None
 
-# ========== NEW: Check for duplicate book ==========
+# ========== CHECK FOR DUPLICATE BOOK ==========
 def is_book_duplicate(title, book_shop_app, exclude_book_id=None):
     """
     Check if a book with the same title already exists.
     Returns: (is_duplicate, category_name)
+    
+    Parameters:
+    - title: The book title to check
+    - book_shop_app: The Book_Shop instance
+    - exclude_book_id: Optional book ID to exclude (for editing)
     """
     categories = book_shop_app.load_books()
     for category in categories:

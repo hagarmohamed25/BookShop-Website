@@ -78,15 +78,23 @@
         },
         {
             "id": 3,
-            "name": "Romance",
+            "name": "Children",
             "books": [
                 {
-                    "id": 6,
-                    "title": "fdf",
-                    "description": "humor memoir tinged with just enough tragedy and pathos to make it worthwhile, Jenny Lawson examines her own experience with severe depressionhumor memoir tinged with just enough tragedy and pathos to make it worthwhile, Jenny Lawson examines her own experience with severe depression",
-                    "price": 66.0,
+                    "id": 10,
+                    "title": "The Snowy Day",
+                    "description": "With a warm sense of wonder, this beloved tale captures the magic and joy of a city kid's day in the snow. When Peter wakes up one winter morning, he sees it immediately. Snow! Everything outside his window is covered\u2014and transformed\u2014by new-fallen snow. What a day for adventure! Just after breakfast, Peter bundles up in his puffy red snowsuit and races outside. Cars are covered! Streets are covered! There's barely a path to walk, but there's plenty of room for discovery. Peter delights in every footprint he tracks, every tree branch he rattles, every snow angel he makes. How will this young explorer end his day? Bright colors, soft illustrations, and a simple but remarkable sense of childhood amazement make this quiet classic a rich, relatable story.",
+                    "price": 80.0,
                     "stock": 8,
-                    "image": "8f5e15eb-1875-4124-82be-c7bc16041624.webp"
+                    "image": "0fa8d609-4d27-4e0a-a7cd-6903d4393769.jpg"
+                },
+                {
+                    "id": 11,
+                    "title": "Goodnight Moon",
+                    "description": "This gentle bedtime story, which has lulled generations of children to sleep, is the perfect first book to share at bedtime.\r\n\r\nIn a great green room a little bunny is tucked up snugly and safely in bed and is getting ready to say goodnight to all the familiar things in his room, one by one.\r\nMargaret Wise Brown's comforting, rhythmical text accompanied by the warmth of Clement Hurd's classic mid-century illustrations make Goodnight Moon a timeless picture book, which is known and loved around the world.",
+                    "price": 90.0,
+                    "stock": 15,
+                    "image": "10714559-0191-4bf0-a9f0-52a3e1089a84.jpg"
                 }
             ]
         }
