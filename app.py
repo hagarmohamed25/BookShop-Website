@@ -392,10 +392,15 @@ def edit_category(category_id):
         flash("Category name must start with a letter!", "warning")
         return redirect(url_for("dashboard"))
     
-    # Check minimum length
-    if len(name) < 2:
-        flash("Category name must be at least 2 characters!", "warning")
-        return redirect(url_for("dashboard"))
+    categories = load_books()
+    
+    # ========== CHECK FOR DUPLICATE BOOK (excluding current book) ==========
+    for category in categories:
+        for book in category.get("books", []):
+            # Check if another book (with different ID) has the same title
+            if book["title"].lower() == title.lower() and book["id"] != book_id:
+                flash(f"Book '{title}' already exists in category '{category['name']}'!", "warning")
+                return redirect(url_for("dashboard"))
     
     categories = book_shop_app.load_books()
     for cat in categories:
