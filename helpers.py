@@ -1,0 +1,36 @@
+def get_next_id(items):
+    """Get the next available ID for categories"""
+    if not items:
+        return 1
+    max_id = 0
+    for item in items:
+        if item.get("id", 0) > max_id:
+            max_id = item["id"]
+    return max_id + 1
+
+def get_next_book_id(book_shop_app):
+    """Get the next available book ID across ALL categories"""
+    categories = book_shop_app.load_books()
+    max_id = 0
+    for cat in categories:
+        for book in cat.get("books", []):
+            if book.get("id", 0) > max_id:
+                max_id = book["id"]
+    return max_id + 1
+
+def find_category(category_id,book_shop_app):
+    """Find a category by ID"""
+    categories = book_shop_app.load_books()
+    for cat in categories:
+        if cat["id"] == category_id:
+            return cat
+    return None
+
+def find_book_by_id(book_id,book_shop_app):
+    """Find a book by ID across all categories"""
+    categories = book_shop_app.load_books()
+    for cat in categories:
+        for book in cat.get("books", []):
+            if book["id"] == book_id:
+                return book, cat
+    return None, None
